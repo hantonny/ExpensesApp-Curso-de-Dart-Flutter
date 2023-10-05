@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
 
-  TransactionList(this.transactions);
+  final void Function(String) onRomeve;
+
+  TransactionList(this.transactions, this.onRomeve);
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +63,11 @@ class TransactionList extends StatelessWidget {
                               DateFormat('dd/MM/y').format(tr.date)
                           ? 'Hoje - ${DateFormat('dd/MM/y').format(tr.date)}'
                           : DateFormat('dd/MM/y').format(tr.date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Theme.of(context).colorScheme.error,
+                      onPressed: () => this.onRomeve(tr.id),
                     ),
                   ),
                 );
