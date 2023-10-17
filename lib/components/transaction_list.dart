@@ -69,11 +69,31 @@ class TransactionList extends StatelessWidget {
                         ? 'Hoje - ${DateFormat('dd/MM/y').format(tr.date)}'
                         : DateFormat('dd/MM/y').format(tr.date),
                   ),
-                  trailing: IconButton(
-                    icon: Icon(Icons.delete),
-                    color: Theme.of(context).colorScheme.error,
-                    onPressed: () => this.onRomeve(tr.id),
-                  ),
+                  trailing: MediaQuery.of(context).size.width > 480
+                      ? Container(
+                          width: 100,
+                          child: IconButton(
+                            icon: Row(
+                              children: [
+                                Icon(Icons.delete),
+                                SizedBox(width: 10),
+                                Text(
+                                  "Excluir",
+                                  style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.error),
+                                ),
+                              ],
+                            ),
+                            color: Theme.of(context).colorScheme.error,
+                            onPressed: () => this.onRomeve(tr.id),
+                          ),
+                        )
+                      : IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Theme.of(context).colorScheme.error,
+                          onPressed: () => this.onRomeve(tr.id),
+                        ),
                 ),
               );
             },
