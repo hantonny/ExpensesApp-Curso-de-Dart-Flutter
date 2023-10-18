@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import 'adaptative_button.dart';
 import 'adaptative_text_field.dart';
+import 'adaptative_date_picker.dart';
 
 class TransactionForm extends StatefulWidget {
   final void Function(String, double, DateTime) onSubmit;
@@ -30,23 +29,6 @@ class _TransactionFormState extends State<TransactionForm> {
     widget.onSubmit(title, value, _selectedDate);
   }
 
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2023),
-      lastDate: DateTime.now(),
-    ).then((pickedDate) {
-      if (pickedDate == null) {
-        return null;
-      }
-
-      setState(() {
-        _selectedDate = pickedDate;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -72,34 +54,14 @@ class _TransactionFormState extends State<TransactionForm> {
                 keyboardType: TextInputType.numberWithOptions(decimal: true),
                 label: 'Valor (R\$)',
               ),
-              Container(
-                height: 70,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        _selectedDate == DateTime.now()
-                            ? 'Nenhum data selecionado!'
-                            : 'Data Selecionada: ${DateFormat('dd/M/y').format(_selectedDate)}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.normal,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      child: Text(
-                        'Selecionar Data',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.primary),
-                      ),
-                      onPressed: _showDatePicker,
-                    )
-                  ],
-                ),
-              ),
+              // Novo Componente
+              AdaptativeDatePicker(
+                  selectedDate: _selectedDate,
+                  onDateChanged: (newDate) {
+                    setState(() {
+                      _selectedDate = newDate;
+                    });
+                  }),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
