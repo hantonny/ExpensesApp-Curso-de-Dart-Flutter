@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransaction;
 
-  Chart(this.recentTransaction);
+  Chart(this.recentTransaction) {}
 
   List<Map<String, Object>> get groupedTransactions {
     return List.generate(7, (index) {
